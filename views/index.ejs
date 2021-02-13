@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>corona website</title>
+  </head>
+  <body>
+
+    <h1>corona website</h1>
+
+
+      <input type="text" id="name" name="country" value="" required placeholder="coutry name">
+      <button id="button" type="submit" name="button" onclick="getInfo()">search</button>
+      <p id="warning"></p>
+
+
+    <h5 id="first"></h5>
+    <h5 id="second"></h5>
+    <h5 id="third"></h5>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+
+      const socket = io();
+
+    function getInfo() {
+      var data = $('#name').val();
+      if(data) {
+        socket.emit('message1', data);
+      } else {
+        $('#warning').text('please enter the name of the country');
+      }
+    }
+
+    socket.on('message', function(data) {
+      $('#first').text('conformed = ' + data.conform);
+      $('#second').text('deaths = ' + data.death);
+      $('#third').text('recovery = ' + data.recovery);
+    });
+
+    </script>
+  </body>
+</html>
